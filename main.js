@@ -13,7 +13,7 @@ const threeDigitNumberCheck = () => {
         userInputNumber = Number(userInputNumber.trim().replace('-', ''));
         if(Number.isInteger(userInputNumber)) {
             if(userInputNumber > 99 && userInputNumber < 1000) {
-                let set = new Set();
+                const set = new Set();
 
                 for(const item of String(userInputNumber)) {
                     set.add(item);
