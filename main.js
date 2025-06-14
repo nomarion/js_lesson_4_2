@@ -1,36 +1,45 @@
 'use strict';
 
-const SAME_NUMBER = 'Все цифры одинаковые!';
-const REPEAT_NUMBER = 'Есть повторения цифр!';
-const DIFFERENT_NUMBER = 'Все цифры разные!';
-const EXCEPTION = 'Надо трехзначное число! Попробуй еще раз!';
-const dataSet = ['     123      ', '  000456  ', '   -0621   ', '-10', '001', ' 2 ', '3.2'];
+const SAME_NUMBER_ERROR_MESSAGE = 'Все цифры одинаковые!';
+const REPEAT_NUMBER_ERROR_MESSAGE = 'Есть повторения цифр!';
+const DIFFERENT_NUMBER_MESSAGE = 'Все цифры разные!';
+const NOT_THREE_DIGIT_NUMBER_ERROR_MESSAGE = 'Надо трехзначное число! Попробуй еще раз!';
+const EXIT_MESSAGE = 'До новых встреч!'
+const INPUT_NUMBER_MESSAGE = 'Введите трехзначное число:'
 
-const func = (value) => {
-    const int = parseInt(value.replace('-', ''));
-    if(int > 99 && int < 1000) {
-        let set = new Set();
+const threeDigitNumberCheck = () => {
+    let userInputNumber = prompt(INPUT_NUMBER_MESSAGE);
+    if(userInputNumber !== null) {
+        userInputNumber = Number(userInputNumber.trim().replace('-', ''));
+        if(Number.isInteger(userInputNumber)) {
+            if(userInputNumber > 99 && userInputNumber < 1000) {
+                let set = new Set();
 
-        for(const item of String(value)) {
-            set.add(item);
+                for(const item of String(userInputNumber)) {
+                    set.add(item);
+                }
+
+                if(set.size === 1) {
+                    alert(SAME_NUMBER_ERROR_MESSAGE);
+                    return
+                }
+
+                if(set.size === 2) {
+                    alert(REPEAT_NUMBER_ERROR_MESSAGE);
+                    return;
+                }
+
+                alert(DIFFERENT_NUMBER_MESSAGE);
+                return;
+            }
+            alert(NOT_THREE_DIGIT_NUMBER_ERROR_MESSAGE);
+            return threeDigitNumberCheck();
+
         }
-
-        if(set.size === 1) {
-            console.log(SAME_NUMBER);
-            return
-        }
-
-        if(set.size === 2) {
-            console.log(REPEAT_NUMBER);
-            return;
-        }
-
-        console.log(DIFFERENT_NUMBER);
-        return;
+        alert(NOT_THREE_DIGIT_NUMBER_ERROR_MESSAGE);
+        return threeDigitNumberCheck();
     }
-    console.log(EXCEPTION);
+    alert(EXIT_MESSAGE);
 }
 
-for(const item of dataSet) {
-    func(item);
-}
+threeDigitNumberCheck();
